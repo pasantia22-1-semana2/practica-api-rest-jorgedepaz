@@ -10,12 +10,8 @@ routerNote.get("/:id",noteController.getById);
 
 routerNote.post("/",noteController.createNewNote);
 
-routerNote.put("/:id",(req,res)=>{
-    res.json({message: "Hello from PUT"})
-});
+routerNote.put("/:id",noteController.updateById);
 
-routerNote.delete("/:id",(req,res)=>{
-    res.json({message: "Hello from DELETE"})
-});
+routerNote.delete("/:id",noteController.deleteById);
 
 export default routerNote;

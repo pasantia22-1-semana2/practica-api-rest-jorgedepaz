@@ -83,7 +83,27 @@ export class NoteModel{
         let items = this.readJsonFile();
         return items.find(item => item._id === Number(id));
     }
-    update(){
+    update(note){
+        console.log("update");
+        /*let items = this.readJsonFile();
+        for (let i = 0; i < items.length; i++) {
+            if (items[i]._id === Number(note.id)) {
+                items[i]._title =note.title;
+                items[i]._content =note.content;
+                this.writeJsonFile(items);
+                break;
+            }
+        }*/
+    }
+    delete(id){
+        let items = this.readJsonFile();
+        for (let i = 0; i < items.length; i++) {
+            if (items[i]._id === Number(id)) {
+                delete items[i];
+                this.writeJsonFile(items);
+                break;
+            }
+        }
 
     }
 }

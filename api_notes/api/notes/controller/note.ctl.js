@@ -21,7 +21,19 @@ export class NoteController{
     //obtener notas por id
     async getById(req,res){
         var id = req.params.id;
-        let noteByID = noteModel.findById(id);
-        res.json(noteByID);
-      }
+        let noteById = noteModel.findById(id);
+        res.json(noteById);
+    }
+    //actualizar nota
+    async updateById(req,res){
+        var id = req.params.id;
+        let noteById = noteModel.update(id);
+        res.json(noteById);
+    }
+    //eliminar nota
+    async deleteById(req,res){
+        var id = req.params.id;
+        let noteById = noteModel.delete(id);
+        res.json(noteById);
+    }
 }
