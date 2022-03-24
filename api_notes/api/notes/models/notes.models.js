@@ -1,9 +1,8 @@
 import fs from "fs";
 
-class Note{
-    //idNo
-    constructor(title,content,status){
-        this._id = 0;
+export class Note{
+    constructor(id,title,content,status){
+        this._id = id;
         this._title = title;
         this._content = content;
         this._status = status;
@@ -34,4 +33,57 @@ class Note{
         this._status = status;
     }
 
+}
+
+export class NoteModel{
+    constructor(){
+        this._name = 'db';
+        this._dataDir = 'db';
+        this._dataPath = 'db/db.json';
+    }
+    readJsonFile(){
+        let contentFile = fs.readFileSync(this._dataPath, 'utf8');
+        if(contentFile){
+           return JSON.parse(contentFile);
+        }
+        return [];
+    }
+    writeJsonFile(data){
+        let jsonData = JSON.stringify(data,null,'');
+        fs.writeFileSync(this._dataPath,jsonData);
+    }
+    generatePk(){
+        let items = this.readJsonFile();
+        let lastItem = items.pop();
+        if (lastItem) {
+            return ++lastItem._id;
+        }
+        return 1;
+    }
+    async save(note){
+    try {
+        let notes = this.readJsonFile();
+
+        note._id = this.generatePk();
+        console.log(note);
+
+        notes.push(note);
+        await this.writeJsonFile(notes);
+        return note._id;   //--------------------------------------------------------------
+    } catch (error) {
+        console.log(error);
+        return 0;
+    }
+
+    }
+    all(){
+        return this.readJsonFile();
+    }
+    findById(id){
+        let items = this.readJsonFile();
+        return items.find(item => item._id === Number(id));
+    }
+    update(){
+
+    }
 }
