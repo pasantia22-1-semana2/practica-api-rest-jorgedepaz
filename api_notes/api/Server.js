@@ -1,4 +1,5 @@
 import express from "express";
+import noteRoute from "./notes/routes/note.route.js"
 
 export class Server{
     constructor(hostName,port,nameApp){
@@ -7,14 +8,15 @@ export class Server{
         this._name = nameApp;
         this._api = express();
         this.initMiddleware();
+        this.initRoutes();
     }
     initMiddleware(){
         this._api.use(express.json());
         this._api.use(express.urlencoded({extended:true}));
     }
     initRoutes(){
-        this._api.use("api/v1/note", noteRoute);
-        this._api.use("api/v1/note",(req,res)=>{
+        this._api.use("/api/v1/note", noteRoute);
+        this._api.use("/api/v1/home",(req,res)=>{
             res.json({message: "Welcome to my api"})
         });
     }
